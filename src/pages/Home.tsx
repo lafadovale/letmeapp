@@ -39,6 +39,11 @@ export function Home() {
             return;
         }
 
+        if (roomRef.val().endedAt) {
+            alert('This Q&A room has already been ended.');
+            return;
+        }
+
         history.push(`/rooms/${roomCode}`);
 
     }
