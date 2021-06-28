@@ -1,5 +1,6 @@
+import { useEffect } from 'react';
 import { FormEvent, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import logoImg from '../assets/images/logo.svg';
 import { Button } from '../components/Button';
 import { Question } from '../components/Question';
@@ -15,9 +16,16 @@ type RoomParams = {
 
 export function Room() {
     const { user } = useAuth();
+    const history = useHistory();
     const params = useParams<RoomParams>();
     const [newQuestion, setNewQuestion] = useState('');
     const roomId = params.id;
+
+    useEffect(() => {
+        if (!user) {
+            history.push('/');
+        }
+    }, [user, history]);
 
     const { title, questions } = useRoom(roomId);
     

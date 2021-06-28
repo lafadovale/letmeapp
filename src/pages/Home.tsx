@@ -9,14 +9,17 @@ import googleIconImg from '../assets/images/google-icon.svg';
 
 import { Button } from '../components/Button';
 import { useAuth } from '../hooks/useAuth';
+import { useTheme } from '../hooks/useTheme';
 
 import '../styles/auth.scss';
 
 export function Home() {
     const history = useHistory();
     const { user, signInWithGoogle } = useAuth();
+    
+    const { theme, toggleTheme } = useTheme();
+    
     const [roomCode, setRoomCode] = useState('');
-
     async function handleCreateRoom() {
         if (!user) {
             await signInWithGoogle();
@@ -49,7 +52,7 @@ export function Home() {
     }
 
     return (
-        <div id="page-auth">
+        <div id="page-auth" className={theme}>
             <aside>
                 <img src={illustrationImg} alt="Illustration symbolizing Q&amp;A" />
                 <strong>Create Q&amp;A live rooms</strong>
@@ -57,7 +60,8 @@ export function Home() {
             </aside>
             <main>
                 <div className="main-content">
-                    <img src={logoImg} alt="LetMeAsk" />
+                    <button onClick={toggleTheme}>Light / Dark</button>
+                    <img src={logoImg} alt="LetMeAsk" />                    
                     <button onClick={handleCreateRoom} className="create-room">
                         <img src={googleIconImg} alt="Google logo" />
                         Create your room with Google
